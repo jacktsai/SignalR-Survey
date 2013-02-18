@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script src="Scripts/jquery-1.6.4.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.signalR-1.0.0-rc2.js" type="text/javascript"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.connection.broadcastingHub.client.broadcastMessage = function (message) {
+                var messageItem = $('<li>');
+                messageItem.html(message);
+                messageItem.appendTo('#messageList');
+            };
+
+            $.connection.hub.start();
+
+            $('#start').click(function () {
+                $.connection.broadcastingHub.server.start();
+            });
+
+            $('#stop').click(function () {
+                $.connection.broadcastingHub.server.stop();
+            });
+
+        });
+    </script>
+    <input type="button" id="start" value="Start" />
+    <input type="button" id="stop" value="Stop" />
+    <div>
+        <ul id="messageList"></ul>
+    </div>
+</body>
+</html>
